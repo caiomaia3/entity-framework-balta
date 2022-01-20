@@ -9,11 +9,16 @@ using (var context = new BlogDataContext())
     // context.Tags.Add(tag);
     // context.SaveChanges();
 
-    var tag = context.Tags.FirstOrDefault<Tag>(x => x.Id == 3);
-    tag.Name = ".NET";
-    tag.Slug = "dotnet";
+    // var tag = context.Tags.FirstOrDefault<Tag>(x => x.Id == 3);
+    // tag.Name = ".NET";
+    // tag.Slug = "dotnet";
 
-    context.Update(tag);
+    // context.Update(tag);
+    // context.SaveChanges();
+
+    var tag = context.Tags.FirstOrDefault<Tag>(x => x.Id == 3);
+
+    context.Remove(tag);
     context.SaveChanges();
 }
 Console.WriteLine("Programa finalizado.");
