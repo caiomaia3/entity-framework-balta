@@ -1,9 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Linq;
+// using System.Linq;
 using Blog.Data;
+using Blog.Models;
 
-Console.WriteLine("Hello, World!");
-using (BlogDataContext ctx = new())
+
+using (var context = new BlogDataContext())
 {
+    var tag = new Tag { Name = "ASPNET", Slug = "aspnetCaio" };
+    context.Tags.Add(tag);
+    context.SaveChanges();
+
 
 }
+Console.WriteLine("Programa finalizado.");
