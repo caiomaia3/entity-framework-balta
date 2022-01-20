@@ -8,8 +8,8 @@ namespace Blog.Data
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Post> Posts { get; set; } = null!;
         // public DbSet<PostTag> PostTags { get; set; } = null!;
-        public DbSet<Role> Roles { get; set; } = null!;
-        public DbSet<Tag> Tags { get; set; } = null!;
+        // public DbSet<Role> Roles { get; set; } = null!;
+        // public DbSet<Tag> Tags { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         // public DbSet<UserRole> UserRoles { get; set; } = null!;
 
