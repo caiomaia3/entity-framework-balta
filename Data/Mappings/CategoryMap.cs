@@ -28,10 +28,12 @@ namespace Blog.Data.Mappings
                 .HasMaxLength(80);
             builder.Property(x => x.Slug)
                 .IsRequired()
-                .UseIdentityColumn()
                 .HasColumnName("Name")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(80);
+
+            builder.HasIndex(x => x.Slug, "IX_Category_Slug")
+                .IsUnique();
         }
     }
 }
