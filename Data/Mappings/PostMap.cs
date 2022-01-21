@@ -17,8 +17,23 @@ namespace Blog.Data.Mappings
 
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
-                .UseIdentityColumn()
+                .UseIdentityColumn();
+
+            builder.Property(x => x.LastUpdateDate)
+                .IsRequired()
+                .HasColumnName("LastUpdateDate")
+                .HasColumnType("SMALLDATETIME")
+                .HasMaxLength(60)
                 .HasDefaultValueSql("GETDATE()");
+
+            // builder.Property(x => x.Slug)
+            //     .IsRequired()
+            //     .HasColumnName("Name")
+            //     .HasColumnType("VARCHAR")
+            //     .HasMaxLength(80);
+
+            builder.HasIndex(x => x.Slug, "IX_Category_Slug")
+                .IsUnique();
 
             builder.HasOne(x => x.Author)
                 .WithMany(x => x.Posts)

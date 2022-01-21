@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -28,7 +24,7 @@ namespace Blog.Data.Mappings
                 .HasMaxLength(80);
             builder.Property(x => x.Slug)
                 .IsRequired()
-                .HasColumnName("Name")
+                .HasColumnName("Slug")
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(80);
 
