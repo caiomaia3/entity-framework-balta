@@ -1,24 +1,67 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Linq;
 using Blog.Data;
 using Blog.Models;
+using Microsoft.EntityFrameworkCore;
 
-
-using (var context = new BlogDataContext())
+using (BlogDataContext context = new())
 {
-    // var tag = new Tag { Name = "ASPNET", Slug = "aspnetCaio" };
-    // context.Tags.Add(tag);
-    // context.SaveChanges();
+    Console.WriteLine("");
+    /*
+        // User user = new()
+        // {
+        //     Name = "André Baltieri",
+        //     Slug = "andrebaltinha",
+        //     Email = "and@balta.io",
+        //     Bio = "Histórias",
+        //     Image = "https://balta.io",
+        //     PasswordHash = "123456789"
+        // };
 
-    // var tag = context.Tags.FirstOrDefault<Tag>(x => x.Id == 3);
-    // tag.Name = ".NET";
-    // tag.Slug = "dotnet";
+        // Category category = new()
+        // {
+        //     Name = "Backend",
+        //     Slug = "backend"
+        // };
 
-    // context.Update(tag);
-    // context.SaveChanges();
+        // Post post = new()
+        // {
+        //     Author = user,
+        //     Category = category,
+        //     Body = "<p>Hello world</p>",
+        //     Slug = "comecando-com-ef-core",
+        //     Summary = "Neste artigo vamos aprender EF core",
+        //     Title = "Começando com EF core",
+        //     CreateDate = DateTime.Now,
+        //     LastUpdateDate = DateTime.Now,
+        // };
+        // context.Posts.Add(post);
+        // context.SaveChanges();
+    */
 
-    var tag = context.Tags.FirstOrDefault<Tag>(x => x.Id == 3);
+    // List<Post> posts = context
+    //             .Posts
+    //             .AsNoTracking()
+    //             .Include(x => x.Author)
+    //             .Include(x => x.Category)
+    //             .OrderBy(x => x.LastUpdateDate)
+    //             .ToList();
 
-    context.Remove(tag);
-    context.SaveChanges();
+    // foreach (Post post in posts) System.Console.WriteLine($"{post.Title} by {post.Author?.Name} presente em {post.Category?.Name} ");
+
+    var post = context.Posts
+    .Include(x => x.Author)
+    .Include(x => x.Category)
+    .OrderByDescending(x => x.LastUpdateDate)
+    .FirstOrDefault();
+
+    System.Console.WriteLine(post?.Title);
+    if (post != null)
+    {
+        post.Author.Name = "Teste";
+        context.Posts.Update(post);
+        context.SaveChanges();
+    }
+    System.Console.WriteLine(post?.Author?.Name);
 }
 Console.WriteLine("Programa finalizado.");
