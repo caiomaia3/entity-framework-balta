@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using (BlogDataContext context = new())
 {
     Console.WriteLine("");
-
     /*
         // User user = new()
         // {
@@ -39,14 +38,30 @@ using (BlogDataContext context = new())
         // context.Posts.Add(post);
         // context.SaveChanges();
     */
-    List<Post> posts = context
-                .Posts
-                .AsNoTracking()
-                .Include(x => x.Author)
-                // .Where(x => x.AuthorId == 15)
-                .OrderBy(x => x.LastUpdateDate)
-                .ToList();
 
-    foreach (Post post in posts) System.Console.WriteLine($"{post.Title} by {post.Author?.Name} ");
+    // List<Post> posts = context
+    //             .Posts
+    //             .AsNoTracking()
+    //             .Include(x => x.Author)
+    //             .Include(x => x.Category)
+    //             .OrderBy(x => x.LastUpdateDate)
+    //             .ToList();
+
+    // foreach (Post post in posts) System.Console.WriteLine($"{post.Title} by {post.Author?.Name} presente em {post.Category?.Name} ");
+
+    var post = context.Posts
+    .Include(x => x.Author)
+    .Include(x => x.Category)
+    .OrderByDescending(x => x.LastUpdateDate)
+    .FirstOrDefault();
+
+    System.Console.WriteLine(post?.Title);
+    if (post != null)
+    {
+        post.Author.Name = "Teste";
+        context.Posts.Update(post);
+        context.SaveChanges();
+    }
+    System.Console.WriteLine(post?.Author?.Name);
 }
 Console.WriteLine("Programa finalizado.");
