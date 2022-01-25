@@ -5,23 +5,18 @@ using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
 using BlogDataContext context = new();
+var users = GetUsers(context, 0, 25);
 
-var users = context.Users;
-
-foreach (var user in users)
-{
-    foreach (var role in user.Roles)
-    {
-        //Lazy loading
-    }
-}
-
-var users2 = context.Users.Include(x => x.Roles);
-foreach (var user in users2)
-{
-    foreach (var role in user.Roles)
-    {
-        //Eager loading
-    }
-}
 Console.WriteLine("Programa finalizado.");
+
+static List<User> GetUsers(BlogDataContext context, int skip = 0, int take = 25)
+{
+    var users = context
+                    .Users
+                    .AsNoTracking()
+                    .Skip(skip)
+                    .Take(take)
+                    .ToList();
+    return users;
+
+}
