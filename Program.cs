@@ -4,19 +4,20 @@ using Blog.Data;
 using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
-using (BlogDataContext context = new())
-{
-    Console.WriteLine("");
-    context.Add(new User
-    {
-        Bio = "9x Microsoft MVP",
-        Email = "andre@balta.io",
-        GitHub = "andrebaltieri",
-        Image = "https://balta.io",
-        Name = "André Balta",
-        PasswordHash = "1234",
-        Slug = "andre-baltieri"
-    });
-    context.SaveChanges();
-}
+using BlogDataContext context = new();
+var users = GetUsers(context, 0, 25);
+
 Console.WriteLine("Programa finalizado.");
+
+static List<User> GetUsers(BlogDataContext context, int skip = 0, int take = 25)
+{
+    var users = context
+                    .Users
+                    .Include(x => x.Roles)
+                        .ThenInclude(x => x.Users)
+                            .ThenInclude(x => x.Roles) // Sem limite
+                    .ToList();
+
+    return users;
+
+}
