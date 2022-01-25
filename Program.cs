@@ -13,10 +13,11 @@ static List<User> GetUsers(BlogDataContext context, int skip = 0, int take = 25)
 {
     var users = context
                     .Users
-                    .AsNoTracking()
-                    .Skip(skip)
-                    .Take(take)
+                    .Include(x => x.Roles)
+                        .ThenInclude(x => x.Users)
+                            .ThenInclude(x => x.Roles) // Sem limite
                     .ToList();
+
     return users;
 
 }
