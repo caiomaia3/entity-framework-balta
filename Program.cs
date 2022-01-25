@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 using BlogDataContext context = new();
 
-Task<List<Post>> post = context
-        .Posts
+Task<List<User>> post = context
+        .Users
         .ToListAsync();
 var resultado = await post;
-System.Console.WriteLine(resultado.FirstOrDefault().Title);
+System.Console.WriteLine(resultado.FirstOrDefault().Name);
 // IQueryable<Post> post2 = context.Posts.AsNoTracking();
 Console.WriteLine("Programa finalizado.");
