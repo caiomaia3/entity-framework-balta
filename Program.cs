@@ -4,19 +4,12 @@ using Blog.Data;
 using Blog.Models;
 using Microsoft.EntityFrameworkCore;
 
-using (BlogDataContext context = new())
-{
-    Console.WriteLine("");
-    context.Add(new User
-    {
-        Bio = "9x Microsoft MVP",
-        Email = "andre@balta.io",
-        GitHub = "andrebaltieri",
-        Image = "https://balta.io",
-        Name = "André Balta",
-        PasswordHash = "1234",
-        Slug = "andre-baltieri"
-    });
-    context.SaveChanges();
-}
+using BlogDataContext context = new();
+
+Post? post = context
+        .Posts
+        .FirstOrDefault(x => x.Id == 1);
+
+IQueryable<Post> post2 = context.Posts.AsNoTracking();
+
 Console.WriteLine("Programa finalizado.");
