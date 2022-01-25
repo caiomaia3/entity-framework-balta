@@ -6,10 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 using BlogDataContext context = new();
 
-Task<List<User>> post = context
-        .Users
-        .ToListAsync();
-var resultado = await post;
-System.Console.WriteLine(resultado.FirstOrDefault().Name);
-// IQueryable<Post> post2 = context.Posts.AsNoTracking();
+var users = context.Users;
+
+foreach (var user in users)
+{
+    foreach (var role in user.Roles)
+    {
+        //Lazy loading
+    }
+}
+
+var users2 = context.Users.Include(x => x.Roles);
+foreach (var user in users2)
+{
+    foreach (var role in user.Roles)
+    {
+        //Eager loading
+    }
+}
 Console.WriteLine("Programa finalizado.");
